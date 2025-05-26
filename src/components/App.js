@@ -1,4 +1,4 @@
-import {  useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import "../App.css";
 import Header from "./Header";
 import Main from "./Main";
@@ -12,7 +12,7 @@ import FinishedScreen from "./FinishedScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
 
-const SEC_PER_QUESTION=30;
+const SEC_PER_QUESTION = 30;
 
 function reducer(state, action) {
   switch (action.type) {
@@ -23,7 +23,11 @@ function reducer(state, action) {
       return { ...state, status: "error" };
 
     case "start":
-      return { ...state, status: "active",remainingSecond:state.questions.length*SEC_PER_QUESTION };
+      return {
+        ...state,
+        status: "active",
+        remainingSecond: state.questions.length * SEC_PER_QUESTION,
+      };
 
     case "newAnswer":
       const question = state.questions.at(state.currentQuestionIndex);
@@ -51,7 +55,7 @@ function reducer(state, action) {
     case "finished":
       return {
         ...state,
-        status:'finished',
+        status: "finished",
         highscore:
           state.score > state.highscore ? state.score : state.highscore,
       };
@@ -63,13 +67,14 @@ function reducer(state, action) {
         status: "active",
         answer: null,
         correctAnswer: 0,
-        remainingSecond: 10,
+        remainingSecond: state.questions.length * SEC_PER_QUESTION,
       };
+
     case "countDown":
       return {
         ...state,
         remainingSecond: state.remainingSecond - 1,
-        status: state.remainingSecond <=0 ? "finished" : state.status,
+        status: state.remainingSecond <= 0 ? "finished" : state.status,
 
         highscore:
           state.score > state.highscore ? state.score : state.highscore,
